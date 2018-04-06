@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import QuizCard from './QuizCard.js'
 import FormationAppBar from './FormationAppBar.js'
+import StyledSnackBar from './StyledSnackBar.js'
 import { withStyles } from 'material-ui/styles';
-
-import Snackbar from 'material-ui/Snackbar';
 
 const formations = [
   {letter: 'A', name: 'caterpillar'},
@@ -35,10 +34,12 @@ const styles = {
 class App extends Component {
   constructor (props) {
     super(props)
+    const randIndex = Math.floor(Math.random() * formations.length);
+    const formation = formations[randIndex];
     this.state = {
       open: false,
-      letter: "Z",
-      name: "z",
+      letter: formation.letter,
+      name: formation.name,
       input: "",
     }
     this.checkFormation = this.checkFormation.bind(this)
@@ -68,7 +69,6 @@ class App extends Component {
 
   render() {
     const { open, letter, name, input } = this.state;
-    const { classes } = this.props;
 
     return (
       <div className="App">
@@ -79,20 +79,9 @@ class App extends Component {
           letter={letter}
           name={name}
           input={input}/>
-        <Snackbar
-          className={classes.snackbar}
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
+        <StyledSnackBar
           open={open}
-          autoHideDuration={1500}
-          onClose={this.handleClose}
-          SnackbarContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={<span id="message-id">Correct!</span>}
-        />
+          handleClose={this.handleClose}/>
       </div>
     );
   }

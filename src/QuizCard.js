@@ -28,6 +28,9 @@ const styles = theme => ({
     margin: 'auto',
     marginTop: '10%',
   },
+  textField: {
+    width: '100%'
+  }
 })
 
 
@@ -67,6 +70,7 @@ class QuizCard extends Component {
               </Grid>
               <Grid item xs={6} sm={6}>
                 <TextField
+                  className={classes.textField}
                   id="formationName"
                   label="Formation Name"
                   margin="normal"
@@ -81,7 +85,7 @@ class QuizCard extends Component {
                   variant="raised"
                   size="small"
                   onClick={() => checkFormation()}>
-                  Change Formation
+                  Check
                 </Button>
               </Grid>
             </Grid>
