@@ -10,9 +10,9 @@ import Grid from 'material-ui/Grid'
 
 const formations = [
   {letter: 'A', name: 'caterpillar'},
-  {letter: 'B', name: 'setairstep'},
-  {letter: 'C', name: 'hour glass'},
-  {letter: 'D', name: 'hope diamond'},
+  {letter: 'B', name: 'stairstep'},
+  {letter: 'C', name: 'hourglass'},
+  {letter: 'D', name: 'hopediamond'},
 ];
 
 const styles = theme => ({
@@ -40,27 +40,20 @@ class QuizCard extends Component {
     this.state = { letter: "A", name: "caterpillar", input:"" }
   }
 
-  checkFormation = () => {
-    console.log(this.state.input)
-    let input = this.state.input.toLowerCase().replace(" ","")
-    if (input === this.state.name) {
-      console.log("WOot")
-
+  handleSubmit = (event) => {
+    let inputText = this.state.input.toLowerCase().replace(" ","")
+    if (inputText === this.state.name) {
       const randIndex = Math.floor(Math.random() * formations.length);
       const formation = formations[randIndex];
 
       this.setState({ letter: formation.letter, name: formation.name, input:"" });
+      event.target.reset();
     }
+    event.preventDefault();
   }
 
   handleChange = (event) => {
-    this.setState({ input: event.target.value })
-
-    if (event.key === 'Enter') {
-      console.log(event.key)
-      event.preventDefault();
-    }
-
+   this.setState({input: event.target.value});
   }
 
   render(){
@@ -70,38 +63,36 @@ class QuizCard extends Component {
     return (
       <Card className={classes.card}>
         <CardContent>
-          <Grid
-            container
-            justify="space-around"
-            className={classes.root}
-            >
-            <Grid item xs={6} sm={3}>
-              <Typography
-                className={classes.formationLetter}
-                align="center"
-                variant="headline"
-                component="h2">
-                {letter}
-              </Typography>
-            </Grid>
-            <Grid item xs={6} sm={6}>
-              <form
-                className={classes.container}
-                noValidate
-                autoComplete="off">
+          <form
+            noValidate
+            autoComplete="off"
+            onSubmit={this.handleSubmit}>
+            <Grid
+              container
+              justify="space-around"
+              className={classes.root}>
+              <Grid item xs={6} sm={3}>
+                <Typography
+                  className={classes.formationLetter}
+                  align="center"
+                  variant="headline"
+                  component="h2">
+                  {letter}
+                </Typography>
+              </Grid>
+              <Grid item xs={6} sm={6}>
                 <TextField
                   id="formationName"
                   label="Formation Name"
-                  value={this.state.input}
                   margin="normal"
                   onChange={this.handleChange}
                 />
-              </form>
+              </Grid>
+              <Grid item xs={12} sm={3}>
+                <Button type='submit' size="small" onClick={this.checkFormation}>Change Formation</Button>
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={3}>
-              <Button size="small" onClick={this.checkFormation}>Change Formation</Button>
-            </Grid>
-          </Grid>
+          </form>
         </CardContent>
       </Card>
     )
