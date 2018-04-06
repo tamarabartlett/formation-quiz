@@ -7,14 +7,6 @@ import TextField from 'material-ui/TextField';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid'
 
-
-const formations = [
-  {letter: 'A', name: 'caterpillar'},
-  {letter: 'B', name: 'stairstep'},
-  {letter: 'C', name: 'hourglass'},
-  {letter: 'D', name: 'hopediamond'},
-];
-
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -29,36 +21,29 @@ const styles = theme => ({
     color: '#2e64b8',
   },
   formationLetter: {
-    width: '80%',
+    margin: 'auto',
+    marginTop: '10%',
+  },
+  button: {
+    margin: 'auto',
+    marginTop: '10%',
   },
 })
 
 
 class QuizCard extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { letter: "A", name: "caterpillar", input:"" }
+  handleChange = (event) => {
+    const input = event.target.value
+    this.props.handleInputChange(input)
   }
 
   handleSubmit = (event) => {
-    let inputText = this.state.input.toLowerCase().replace(" ","")
-    if (inputText === this.state.name) {
-      const randIndex = Math.floor(Math.random() * formations.length);
-      const formation = formations[randIndex];
-
-      this.setState({ letter: formation.letter, name: formation.name, input:"" });
-      event.target.reset();
-    }
     event.preventDefault();
-  }
-
-  handleChange = (event) => {
-   this.setState({input: event.target.value});
+    this.props.checkFormation()
   }
 
   render(){
-    const { letter } = this.state
-    const { classes } = this.props
+    const { classes, checkFormation, letter, input } = this.props
 
     return (
       <Card className={classes.card}>
@@ -85,11 +70,19 @@ class QuizCard extends Component {
                   id="formationName"
                   label="Formation Name"
                   margin="normal"
+                  autoFocus={true}
+                  value={input}
                   onChange={this.handleChange}
                 />
               </Grid>
               <Grid item xs={12} sm={3}>
-                <Button type='submit' size="small" onClick={this.checkFormation}>Change Formation</Button>
+                <Button
+                  className={classes.button}
+                  variant="raised"
+                  size="small"
+                  onClick={() => checkFormation()}>
+                  Change Formation
+                </Button>
               </Grid>
             </Grid>
           </form>
