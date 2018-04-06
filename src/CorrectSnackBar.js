@@ -4,7 +4,8 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = {
   snackbar: {
-    background: '#2e64b8',
+    background: '#2a63bc',
+    // border: 'solid #67c258 3px',
     fontSize: '20px',
   }
 };

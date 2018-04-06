@@ -6,6 +6,7 @@ import Formations from './Formations.js'
 import CorrectSnackBar from './CorrectSnackBar.js'
 import AnswerSnackBar from './AnswerSnackBar.js'
 import { withStyles } from 'material-ui/styles';
+// import Button from 'material-ui/Button';
 
 const styles = {
   card: {
@@ -103,5 +104,13 @@ class App extends Component {
     );
   }
 }
+
+// /* <Button
+//   href='../resources/fury-eight-way.pdf'
+//   variant={true}
+//   target="_blank">
+//   View Fury Formation PDF
+// </Button> */
+
 
 export default withStyles(styles)(App);

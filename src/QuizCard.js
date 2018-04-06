@@ -24,10 +24,19 @@ const styles = theme => ({
     margin: 'auto',
     marginTop: '10%',
   },
-  button: {
+  answerButton: {
     marginLeft: '10px',
     marginRight: '10px',
     marginTop: '10%',
+    backgroundColor: '#FC885D',
+    color: 'white'
+  },
+  correctButton: {
+    marginLeft: '10px',
+    marginRight: '10px',
+    marginTop: '10%',
+    backgroundColor: '#4A7AC8',
+    color: 'white'
   },
   textField: {
     width: '100%'
@@ -82,14 +91,14 @@ class QuizCard extends Component {
               </Grid>
               <Grid item xs={12} sm={3}>
                 <Button
-                  className={classes.button}
+                  className={classes.correctButton}
                   variant="raised"
                   size="small"
                   onClick={checkFormation}>
                   Check
                 </Button>
                 <Button
-                  className={classes.button}
+                  className={classes.answerButton}
                   variant="raised"
                   size="small"
                   onClick={getAnswer}>
