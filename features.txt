@@ -1,0 +1,4 @@
+- Give me the answer button
+- Link to 8 way docs
+- Pics instead of letters
+- Better way to show blocks

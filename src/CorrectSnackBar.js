@@ -9,7 +9,7 @@ const styles = {
   }
 };
 
-function StyledSnackBar(props) {
+function CorrectSnackBar(props) {
   const { classes, open, handleClose } = props;
   return (
     <Snackbar
@@ -31,4 +31,4 @@ function StyledSnackBar(props) {
   );
 }
 
-export default withStyles(styles)(StyledSnackBar);
+export default withStyles(styles)(CorrectSnackBar);

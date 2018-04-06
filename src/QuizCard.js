@@ -25,7 +25,8 @@ const styles = theme => ({
     marginTop: '10%',
   },
   button: {
-    margin: 'auto',
+    marginLeft: '10px',
+    marginRight: '10px',
     marginTop: '10%',
   },
   textField: {
@@ -46,7 +47,7 @@ class QuizCard extends Component {
   }
 
   render(){
-    const { classes, checkFormation, letter, input } = this.props
+    const { classes, checkFormation, getAnswer, letter, input } = this.props
 
     return (
       <Card className={classes.card}>
@@ -84,8 +85,15 @@ class QuizCard extends Component {
                   className={classes.button}
                   variant="raised"
                   size="small"
-                  onClick={() => checkFormation()}>
+                  onClick={checkFormation}>
                   Check
+                </Button>
+                <Button
+                  className={classes.button}
+                  variant="raised"
+                  size="small"
+                  onClick={getAnswer}>
+                  Get Answer
                 </Button>
               </Grid>
             </Grid>

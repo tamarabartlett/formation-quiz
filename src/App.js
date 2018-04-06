@@ -2,15 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import QuizCard from './QuizCard.js'
 import FormationAppBar from './FormationAppBar.js'
-import StyledSnackBar from './StyledSnackBar.js'
+import Formations from './Formations.js'
+import CorrectSnackBar from './CorrectSnackBar.js'
+import AnswerSnackBar from './AnswerSnackBar.js'
 import { withStyles } from 'material-ui/styles';
-
-const formations = [
-  {letter: 'A', name: 'caterpillar'},
-  {letter: 'B', name: 'stairstep'},
-  {letter: 'C', name: 'hourglass'},
-  {letter: 'D', name: 'hopediamond'},
-];
 
 const styles = {
   card: {
@@ -34,10 +29,11 @@ const styles = {
 class App extends Component {
   constructor (props) {
     super(props)
-    const randIndex = Math.floor(Math.random() * formations.length);
-    const formation = formations[randIndex];
+    const randIndex = Math.floor(Math.random() * Formations.length);
+    const formation = Formations[randIndex];
     this.state = {
-      open: false,
+      openCorrect: false,
+      openAnswer: false,
       letter: formation.letter,
       name: formation.name,
       input: "",
@@ -45,12 +41,20 @@ class App extends Component {
     this.checkFormation = this.checkFormation.bind(this)
   }
 
-  handleClick = state => () => {
-   this.setState({ open: true, ...state });
+  handleCorrectClick = state => () => {
+   this.setState({ openCorrect: true, ...state });
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
+  handleAnswerClick = state => () => {
+   this.setState({ openAnswer: true, ...state });
+  };
+
+  handleCorrectClose = () => {
+    this.setState({ openCorrect: false });
+  };
+
+  handleAnswerClose = () => {
+    this.setState({ openAnswer: false });
   };
 
   handleInputChange = (input) => {
@@ -59,29 +63,42 @@ class App extends Component {
 
   checkFormation = () => {
     let inputText = this.state.input.toLowerCase().replace(" ","")
-    if (inputText === this.state.name) {
-      this.setState({ open: true });
-      const randIndex = Math.floor(Math.random() * formations.length);
-      const formation = formations[randIndex];
-      this.setState({ letter: formation.letter, name: formation.name, input:"" });
+    if (inputText === this.state.name.toLowerCase().replace(" ","")) {
+      this.setState({ openCorrect: true });
+      this.resetFormation()
     }
   }
 
+  getAnswer = () => {
+    this.setState({ openAnswer: true });
+    this.resetFormation()
+  }
+
+  resetFormation = () => {
+    const randIndex = Math.floor(Math.random() * Formations.length);
+    const formation = Formations[randIndex];
+    this.setState({ letter: formation.letter, name: formation.name, input:"" });
+  }
+
   render() {
-    const { open, letter, name, input } = this.state;
+    const { openCorrect, openAnswer, letter, name, input } = this.state;
 
     return (
       <div className="App">
         <FormationAppBar />
         <QuizCard
           checkFormation={this.checkFormation}
+          getAnswer={this.getAnswer}
           handleInputChange={this.handleInputChange}
           letter={letter}
-          name={name}
           input={input}/>
-        <StyledSnackBar
-          open={open}
-          handleClose={this.handleClose}/>
+        <CorrectSnackBar
+          open={openCorrect}
+          handleClose={this.handleCorrectClose}/>
+        <AnswerSnackBar
+          open={openAnswer}
+          name={name}
+          handleClose={this.handleAnswerClose}/>
       </div>
     );
   }
