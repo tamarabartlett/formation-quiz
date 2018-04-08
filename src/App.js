@@ -36,7 +36,9 @@ class App extends Component {
       openAnswer: false,
       letter: formation.letter,
       name: formation.name,
+      image: formation.image,
       input: "",
+      picturesChecked: false,
     }
     this.checkFormation = this.checkFormation.bind(this)
   }
@@ -62,6 +64,10 @@ class App extends Component {
     this.setState({input: input});
   }
 
+  handlePictureCheckedSlider = () => {
+    this.setState({picturesChecked: !this.state.picturesChecked});
+  }
+
   checkFormation = () => {
     let inputText = this.state.input.toLowerCase().replace(" ","")
     if (inputText === this.state.name.toLowerCase().replace(" ","")) {
@@ -77,11 +83,19 @@ class App extends Component {
   resetFormation = () => {
     const randIndex = Math.floor(Math.random() * Formations.length);
     const formation = Formations[randIndex];
-    this.setState({ letter: formation.letter, name: formation.name, input:"" });
+    this.setState({ letter: formation.letter, name: formation.name, image:formation.image, input:"" });
   }
 
   render() {
-    const { openCorrect, openAnswer, letter, name, input } = this.state;
+    const {
+      openCorrect,
+      openAnswer,
+      letter,
+      name,
+      input,
+      picturesChecked,
+      image
+    } = this.state;
 
     return (
       <div className="App">
@@ -91,7 +105,10 @@ class App extends Component {
           getAnswer={this.getAnswer}
           handleInputChange={this.handleInputChange}
           letter={letter}
-          input={input}/>
+          input={input}
+          image={image}
+          picturesChecked={picturesChecked}
+          handlePictureCheckedSlider={this.handlePictureCheckedSlider}/>
         <CorrectSnackBar
           open={openCorrect}
           handleClose={this.handleCorrectClose}/>

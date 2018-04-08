@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
 import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
-import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid'
+import Switch from 'material-ui/Switch';
+import { FormControlLabel } from 'material-ui/Form';
+import FormationPicture from './FormationPicture.js'
+import FormationNameInput from './FormationNameInput.js'
 
 const styles = theme => ({
   root: {
@@ -38,9 +40,19 @@ const styles = theme => ({
     backgroundColor: '#4A7AC8',
     color: 'white'
   },
-  textField: {
-    width: '100%'
-  }
+  checked: {
+    color: "#67c258",
+    '& + $bar': {
+      backgroundColor: "#67c258",
+    },
+  },
+  bar: {},
+  media: {
+    height: 275,
+  },
+  noMedia: {
+    height: 0,
+  },
 })
 
 
@@ -56,11 +68,48 @@ class QuizCard extends Component {
   }
 
   render(){
-    const { classes, checkFormation, getAnswer, letter, input } = this.props
+    const {
+      classes,
+      checkFormation,
+      getAnswer,
+      letter,
+      input,
+      image,
+      picturesChecked,
+      handlePictureCheckedSlider
+    } = this.props
+
+    let mediaClass=classes.noMedia
+    if(picturesChecked){
+      mediaClass=classes.media
+    }
 
     return (
       <Card className={classes.card}>
         <CardContent>
+          <Grid
+            container
+            justify="space-around"
+            className={classes.root}>
+            <Grid item xs={6} sm={3}>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={picturesChecked}
+                    onChange={handlePictureCheckedSlider}
+                    value="checkedF"
+                    classes={{
+                      checked: classes.checked,
+                      bar: classes.bar,
+                    }}
+                  />
+                }
+                label="Pictures"
+              />
+            </Grid>
+            <Grid item xs={6} sm={9}>
+            </Grid>
+          </Grid>
           <form
             noValidate
             autoComplete="off"
@@ -70,24 +119,18 @@ class QuizCard extends Component {
               justify="space-around"
               className={classes.root}>
               <Grid item xs={6} sm={3}>
-                <Typography
-                  className={classes.formationLetter}
-                  align="center"
-                  variant="headline"
-                  component="h2">
-                  {letter}
-                </Typography>
+              <FormationPicture
+                image={image}
+                formationLetter={letter}
+                mediaClass={mediaClass}
+                formationLetterClass={classes.formationLetter}
+              />
+
               </Grid>
               <Grid item xs={6} sm={6}>
-                <TextField
-                  className={classes.textField}
-                  id="formationName"
-                  label="Formation Name"
-                  margin="normal"
-                  autoFocus={true}
-                  value={input}
-                  onChange={this.handleChange}
-                />
+                <FormationNameInput
+                  handleChange={this.handleChange}
+                  input={input} />
               </Grid>
               <Grid item xs={12} sm={3}>
                 <Button
@@ -117,6 +160,4 @@ QuizCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-const StyledQuizCard = withStyles(styles)(QuizCard);
-
-export default StyledQuizCard
+export default withStyles(styles)(QuizCard);

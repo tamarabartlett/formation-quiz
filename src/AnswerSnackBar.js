@@ -28,6 +28,7 @@ class AnswerSnackBar extends Component {
           horizontal: 'center',
         }}
         open={open}
+        autoHideDuration={2000}
         onClose={handleClose}
         SnackbarContentProps={{
           classes: {
