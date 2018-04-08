@@ -38,7 +38,7 @@ class App extends Component {
       name: formation.name,
       image: formation.image,
       input: "",
-      picturesChecked: false,
+      picturesChecked: true,
     }
     this.checkFormation = this.checkFormation.bind(this)
   }
