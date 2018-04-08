@@ -6,7 +6,6 @@ import Formations from './Formations.js'
 import CorrectSnackBar from './CorrectSnackBar.js'
 import AnswerSnackBar from './AnswerSnackBar.js'
 import { withStyles } from 'material-ui/styles';
-// import Button from 'material-ui/Button';
 
 const styles = {
   card: {
@@ -56,6 +55,7 @@ class App extends Component {
 
   handleAnswerClose = () => {
     this.setState({ openAnswer: false });
+    this.resetFormation()
   };
 
   handleInputChange = (input) => {
@@ -72,7 +72,6 @@ class App extends Component {
 
   getAnswer = () => {
     this.setState({ openAnswer: true });
-    this.resetFormation()
   }
 
   resetFormation = () => {
